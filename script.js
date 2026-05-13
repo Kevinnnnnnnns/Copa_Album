@@ -1,4 +1,24 @@
-// Configurações e Estado - Copa 2026 (Elencos Oficiais)
+// CONFIGURAÇÃO DO FIREBASE (Você deve substituir pelos seus dados do console do Firebase)
+const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_PROJETO.firebaseapp.com",
+    projectId: "SEU_PROJETO",
+    storageBucket: "SEU_PROJETO.appspot.com",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID"
+};
+
+// Inicializa Firebase (Caso as chaves sejam válidas)
+try {
+    firebase.initializeApp(firebaseConfig);
+} catch (e) {
+    console.warn("Firebase não configurado. Use 'SUA_API_KEY' etc no script.js");
+}
+
+const auth = firebase.auth ? firebase.auth() : null;
+const db = firebase.firestore ? firebase.firestore() : null;
+
+// Configurações e Estado
 const TEAMS = [
     { name: 'Argentina', code: 'ARG', stickers: 20 }, { name: 'Brasil', code: 'BRA', stickers: 20 },
     { name: 'Colômbia', code: 'COL', stickers: 20 }, { name: 'Equador', code: 'ECU', stickers: 20 },
@@ -27,40 +47,17 @@ const TEAMS = [
 ];
 
 const PLAYER_NAMES = {
-    'BRA': [
-        'Escudo da Seleção', // #1
-        'Alisson',           // #2
-        'Bento',             // #3
-        'Marquinhos',        // #4
-        'Éder Militão',      // #5
-        'Gabriel Magalhães', // #6
-        'Danilo',            // #7
-        'Wesley',            // #8
-        'Lucas Paquetá',     // #9
-        'Casemiro',          // #10
-        'Bruno Guimarães',   // #11
-        'Luiz Henrique',     // #12
-        'Time Completo',     // #13
-        'Vinícius Júnior',   // #14
-        'Rodrygo',           // #15
-        'João Pedro',        // #16
-        'Matheus Cunha',     // #17
-        'Gabriel Martinelli',// #18
-        'Raphinha',          // #19
-        'Estêvão'            // #20
-    ],
-    'ARG': ['Escudo', 'E. Martínez', 'Molina', 'Romero', 'Otamendi', 'Tagliafico', 'De Paul', 'Enzo F.', 'Mac Allister', 'Lionel Messi', 'J. Álvarez', 'Di María', 'Time Completo', 'Armani', 'Montiel', 'L. Martínez', 'Paredes', 'Lo Celso', 'Garnacho', 'Lautaro M.'],
-    'FRA': ['Escudo', 'Maignan', 'Koundé', 'Saliba', 'Upamecano', 'Theo H.', 'Tchouaméni', 'Camavinga', 'Griezmann', 'Mbappé', 'Dembélé', 'Giroud', 'Time Completo', 'Samba', 'Pavard', 'Konaté', 'Rabiot', 'Zaire-Emery', 'Fofana', 'Kolo Muani', 'Thuram'],
-    'ESP': ['Escudo', 'Unai Simón', 'Carvajal', 'Le Normand', 'Laporte', 'Cucurella', 'Rodri', 'Pedri', 'Fabian Ruiz', 'Lamine Yamal', 'Nico Williams', 'Morata', 'Time Completo', 'Raya', 'Navas', 'Vivian', 'Grimaldo', 'Zubimendi', 'Olmo', 'Baena'],
-    'ENG': ['Escudo', 'Pickford', 'Walker', 'Stones', 'Guehi', 'Trippier', 'Rice', 'Mainoo', 'Bellingham', 'Saka', 'Foden', 'Harry Kane', 'Time Completo', 'Ramsdale', 'Konsa', 'Dunk', 'Joe Gomez', 'Gallagher', 'Palmer', 'Watkins'],
-    'POR': ['Escudo', 'Diogo Costa', 'Cancelo', 'Ruben Dias', 'Pepe', 'Nuno Mendes', 'Palhinha', 'Vitinha', 'Bruno F.', 'Bernardo Silva', 'Rafael Leão', 'C. Ronaldo', 'Time Completo', 'José Sá', 'Dalot', 'Inácio', 'Danilo P.', 'João Félix', 'Gonçalo Ramos', 'Diogo Jota']
+    'BRA': ['Escudo', 'Alisson', 'Bento', 'Marquinhos', 'Militão', 'G. Magalhães', 'Danilo', 'Wesley', 'Paquetá', 'Casemiro', 'B. Guimarães', 'Luiz Henrique', 'Time', 'Vini Jr', 'Rodrygo', 'João Pedro', 'M. Cunha', 'Martinelli', 'Raphinha', 'Estêvão']
 };
 
 let stickers = {};
+let currentUser = null;
 let currentTeam = 'all';
 let currentFilter = 'all';
 let searchQuery = '';
+let authMode = 'login';
 
+// Elementos DOM
 const grid = document.getElementById('sticker-grid');
 const progressBar = document.getElementById('main-progress-bar');
 const progressPercent = document.getElementById('progress-percent');
@@ -69,67 +66,133 @@ const statsRepeated = document.getElementById('stats-repeated');
 const searchInput = document.getElementById('search-input');
 const filterBtns = document.querySelectorAll('.btn-filter');
 
+// Auth DOM
+const authModal = document.getElementById('auth-modal');
+const authBtn = document.getElementById('auth-btn');
+const userProfile = document.getElementById('user-profile');
+const userEmailSpan = document.getElementById('user-email');
+const logoutBtn = document.getElementById('logout-btn');
+const authForm = document.getElementById('auth-form');
+const tabLogin = document.getElementById('tab-login');
+const tabRegister = document.getElementById('tab-register');
+const authError = document.getElementById('auth-error');
+const closeModal = document.getElementById('close-modal');
+
 function init() {
-    loadData();
+    setupAuthListeners();
     renderTeamFilter();
+    setupEventListeners();
+    
+    // Se não houver Firebase (Auth null), carrega local
+    if (!auth) loadDataLocal();
+}
+
+// --- LOGICA DE AUTH ---
+function setupAuthListeners() {
+    if (!auth) return;
+
+    auth.onAuthStateChanged(user => {
+        currentUser = user;
+        if (user) {
+            authBtn.classList.add('hidden');
+            userProfile.classList.remove('hidden');
+            userEmailSpan.innerText = user.email;
+            loadDataFromCloud();
+        } else {
+            authBtn.classList.remove('hidden');
+            userProfile.classList.add('hidden');
+            loadDataLocal();
+        }
+    });
+
+    authBtn.onclick = () => authModal.classList.remove('hidden');
+    closeModal.onclick = () => authModal.classList.add('hidden');
+    logoutBtn.onclick = () => auth.signOut();
+
+    tabLogin.onclick = () => {
+        authMode = 'login';
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+    };
+
+    tabRegister.onclick = () => {
+        authMode = 'register';
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+    };
+
+    authForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('auth-email').value;
+        const pass = document.getElementById('auth-password').value;
+        authError.innerText = '';
+
+        try {
+            if (authMode === 'login') {
+                await auth.signInWithEmailAndPassword(email, pass);
+            } else {
+                await auth.createUserWithEmailAndPassword(email, pass);
+            }
+            authModal.classList.add('hidden');
+        } catch (err) {
+            authError.innerText = err.message;
+        }
+    };
+}
+
+// --- LOGICA DE DADOS ---
+async function loadDataFromCloud() {
+    if (!db) return;
+    const doc = await db.collection('users').doc(currentUser.uid).get();
+    if (doc.exists) {
+        stickers = doc.data().stickers;
+    } else {
+        generateInitialData();
+        await saveToCloud();
+    }
     renderGrid();
     updateStats();
-    setupEventListeners();
 }
 
-function renderTeamFilter() {
-    const controls = document.querySelector('.controls');
-    let teamSelector = document.querySelector('.team-selector');
-    if (!teamSelector) {
-        teamSelector = document.createElement('div');
-        teamSelector.className = 'team-selector';
-        controls.prepend(teamSelector);
-    }
-    
-    teamSelector.innerHTML = `
-        <select id="team-filter" class="btn-filter">
-            <option value="all">Todas as Seleções (Elencos 2026)</option>
-            ${TEAMS.map(t => `<option value="${t.code}">${t.name}</option>`).join('')}
-        </select>
-    `;
-
-    document.getElementById('team-filter').addEventListener('change', (e) => {
-        currentTeam = e.target.value;
-        renderGrid();
-    });
-}
-
-function loadData() {
-    const saved = localStorage.getItem('copa-tracker-v11');
+function loadDataLocal() {
+    const saved = localStorage.getItem('album-copa-v12');
     if (saved) {
         stickers = JSON.parse(saved);
     } else {
-        TEAMS.forEach(team => {
-            for (let i = 1; i <= team.stickers; i++) {
-                const id = `${team.code}-${i}`;
-                stickers[id] = { have: false, repeated: 0, team: team.code, num: i };
-            }
-        });
-        saveData();
+        generateInitialData();
     }
+    renderGrid();
+    updateStats();
+}
+
+function generateInitialData() {
+    stickers = {};
+    TEAMS.forEach(team => {
+        for (let i = 1; i <= team.stickers; i++) {
+            const id = `${team.code}-${i}`;
+            stickers[id] = { have: false, repeated: 0, team: team.code, num: i };
+        }
+    });
 }
 
 function saveData() {
-    localStorage.setItem('copa-tracker-v11', JSON.stringify(stickers));
+    if (currentUser && db) {
+        saveToCloud();
+    } else {
+        localStorage.setItem('album-copa-v12', JSON.stringify(stickers));
+    }
 }
 
-function updateStats() {
-    const totalPossible = Object.keys(stickers).length;
-    const owned = Object.values(stickers).filter(s => s.have).length;
-    const repeated = Object.values(stickers).reduce((acc, s) => acc + s.repeated, 0);
-    const percent = Math.round((owned / totalPossible) * 100) || 0;
-
-    progressBar.style.width = `${percent}%`;
-    progressPercent.innerText = `${percent}%`;
-    statsTotal.innerText = `Tenho: ${owned} / ${totalPossible}`;
-    statsRepeated.innerText = `Repetidas: ${repeated}`;
+async function saveToCloud() {
+    if (!currentUser || !db) return;
+    try {
+        await db.collection('users').doc(currentUser.uid).set({ stickers });
+    } catch (e) {
+        console.error("Erro ao salvar nuvem", e);
+    }
 }
 
+// --- RENDER ---
 function renderGrid() {
     grid.innerHTML = '';
     
@@ -142,19 +205,17 @@ function renderGrid() {
         if (currentFilter === 'repeated' && s.repeated === 0) return;
         
         let playerName = PLAYER_NAMES[s.team]?.[s.num - 1] || `${s.team} - Jogador ${s.num}`;
-        
-        // Regra Universal: #1 é Escudo, #13 é Time
         if (s.num === 1) playerName = 'Escudo da Seleção';
         if (s.num === 13) playerName = 'Time Completo';
-        
+
         if (searchQuery && !playerName.toLowerCase().includes(searchQuery.toLowerCase()) && !s.num.toString().includes(searchQuery)) return;
 
         const isSpecial = s.num === 1 || s.num === 13;
         const card = document.createElement('div');
         card.className = `sticker-card ${s.have ? 'have' : ''} ${s.repeated > 0 ? 'repeated' : ''} ${isSpecial ? 'special' : ''}`;
         card.innerHTML = `
-            <div class="sticker-status status-have">OK</div>
-            <div class="sticker-status status-repeated">+${s.repeated}</div>
+            <div class="sticker-status">OK</div>
+            <div class="status-repeated">+${s.repeated}</div>
             <div class="sticker-info">
                 <span class="sticker-team-badge">${s.team}</span>
                 <div class="sticker-name">${playerName}</div>
@@ -173,6 +234,18 @@ function renderGrid() {
     });
 }
 
+function updateStats() {
+    const totalPossible = Object.keys(stickers).length;
+    const owned = Object.values(stickers).filter(s => s.have).length;
+    const repeated = Object.values(stickers).reduce((acc, s) => acc + s.repeated, 0);
+    const percent = Math.round((owned / totalPossible) * 100) || 0;
+
+    progressBar.style.width = `${percent}%`;
+    progressPercent.innerText = `${percent}%`;
+    statsTotal.innerText = `Tenho: ${owned} / ${totalPossible}`;
+    statsRepeated.innerText = `Repetidas: ${repeated}`;
+}
+
 window.toggleHave = (id) => {
     stickers[id].have = !stickers[id].have;
     if (!stickers[id].have) stickers[id].repeated = 0;
@@ -189,6 +262,28 @@ window.addRepeated = (id) => {
     updateStats();
     renderGrid();
 };
+
+function renderTeamFilter() {
+    const controls = document.querySelector('.controls');
+    let teamSelector = document.querySelector('.team-selector');
+    if (!teamSelector) {
+        teamSelector = document.createElement('div');
+        teamSelector.className = 'team-selector';
+        controls.prepend(teamSelector);
+    }
+    
+    teamSelector.innerHTML = `
+        <select id="team-filter" class="btn-filter" style="padding: 0.8rem 1.5rem; border-radius: 16px; border: 2px solid #f0f3f5; font-weight: 700;">
+            <option value="all">Todas as Seleções</option>
+            ${TEAMS.map(t => `<option value="${t.code}">${t.name}</option>`).join('')}
+        </select>
+    `;
+
+    document.getElementById('team-filter').addEventListener('change', (e) => {
+        currentTeam = e.target.value;
+        renderGrid();
+    });
+}
 
 function setupEventListeners() {
     filterBtns.forEach(btn => {

@@ -3,39 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Álbum Copa <span>2026</span></title>
-    <link rel="stylesheet" href="style.css?v=11.0">
+    <title>Álbum Copa 2026</title>
+    <link rel="stylesheet" href="style.css?v=12.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="container header-content">
             <div class="title-area">
                 <h1>Álbum Copa <span>2026</span></h1>
-                <p>Gerencie sua coleção rumo ao Hexa!</p>
+                <p>Gerencie sua coleção na nuvem!</p>
             </div>
             
-            <div class="stats-card">
-                <div class="stats-text" style="display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 5px;">
-                    <span>Progresso da Coleção</span>
-                    <span id="progress-percent">0%</span>
+            <div class="user-area">
+                <button id="auth-btn" class="btn-auth">Entrar / Criar Conta</button>
+                <div id="user-profile" class="user-profile hidden">
+                    <span id="user-email"></span>
+                    <button id="logout-btn" class="btn-logout">Sair</button>
                 </div>
-                <div class="progress-container">
-                    <div id="main-progress-bar" class="progress-bar"></div>
-                </div>
-                <div class="stats-text" style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); display: flex; justify-content: space-between;">
-                    <span id="stats-total">Tenho: 0 / 0</span>
-                    <span id="stats-repeated">Repetidas: 0</span>
+
+                <div class="stats-card">
+                    <div class="stats-text" style="display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 5px;">
+                        <span>Progresso</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="main-progress-bar" class="progress-bar"></div>
+                    </div>
+                    <div class="stats-text" style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; display: flex; justify-content: space-between;">
+                        <span id="stats-total">Tenho: 0 / 0</span>
+                        <span id="stats-repeated">Repetidas: 0</span>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="tab-login">Entrar</button>
+                <button class="tab-btn" id="tab-register">Cadastrar</button>
+            </div>
+            
+            <form id="auth-form" class="auth-form">
+                <input type="email" id="auth-email" placeholder="Seu E-mail" required>
+                <input type="password" id="auth-password" placeholder="Sua Senha" required>
+                <button type="submit" id="submit-auth" class="btn-submit">Confirmar</button>
+            </form>
+            <p id="auth-error" class="error-msg"></p>
+        </div>
+    </div>
+
     <main class="container">
         <section class="controls">
-            <!-- Team selector will be injected here -->
             <div class="filters">
                 <button class="btn-filter active" data-filter="all">Todas</button>
                 <button class="btn-filter" data-filter="missing">Faltantes</button>
@@ -53,6 +78,10 @@
         </div>
     </main>
 
-    <script src="script.js?v=11.0"></script>
+    <!-- Firebase App (Compat mode for easier sync) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="script.js?v=12.0"></script>
 </body>
 </html>
