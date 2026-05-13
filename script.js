@@ -27,28 +27,33 @@ const TEAMS = [
 ];
 
 const PLAYER_NAMES = {
-    'BRA': ['Alisson', 'Danilo', 'Marquinhos', 'Militão', 'G. Arana', 'Casemiro', 'B. Guimarães', 'Paquetá', 'Vini Jr', 'Rodrygo', 'Endrick', 'Ederson', 'Bento', 'Bremer', 'Beraldo', 'João Gomes', 'Douglas Luiz', 'Savinho', 'Raphinha', 'Gabriel Martinelli'],
-    'ARG': ['E. Martínez', 'Molina', 'Romero', 'Otamendi', 'Tagliafico', 'De Paul', 'Enzo F.', 'Mac Allister', 'Lionel Messi', 'J. Álvarez', 'Di María', 'Armani', 'Montiel', 'L. Martínez', 'Paredes', 'Lo Celso', 'N. González', 'Lautaro M.', 'Garnacho', 'Dybala'],
-    'FRA': ['Maignan', 'Koundé', 'Saliba', 'Upamecano', 'Theo H.', 'Tchouaméni', 'Camavinga', 'Griezmann', 'Mbappé', 'Dembélé', 'Giroud', 'Samba', 'Pavard', 'Konaté', 'Rabiot', 'Zaire-Emery', 'Fofana', 'Kolo Muani', 'Thuram', 'Barcola'],
-    'ESP': ['Unai Simón', 'Carvajal', 'Le Normand', 'Laporte', 'Cucurella', 'Rodri', 'Pedri', 'Fabian Ruiz', 'Lamine Yamal', 'Nico Williams', 'Morata', 'Raya', 'Navas', 'Vivian', 'Grimaldo', 'Zubimendi', 'Olmo', 'Baena', 'Ferran Torres', 'Oyarzabal'],
-    'ENG': ['Pickford', 'Walker', 'Stones', 'Guehi', 'Trippier', 'Rice', 'Mainoo', 'Bellingham', 'Saka', 'Foden', 'Harry Kane', 'Ramsdale', 'Konsa', 'Dunk', 'Joe Gomez', 'Gallagher', 'Palmer', 'Bowen', 'Eze', 'Ollie Watkins'],
-    'POR': ['Diogo Costa', 'Cancelo', 'Ruben Dias', 'Pepe', 'Nuno Mendes', 'Palhinha', 'Vitinha', 'Bruno F.', 'Bernardo Silva', 'Rafael Leão', 'C. Ronaldo', 'José Sá', 'Dalot', 'Inácio', 'Antonio Silva', 'Danilo P.', 'Ruben Neves', 'João Félix', 'Gonçalo Ramos', 'Diogo Jota'],
-    'GER': ['Neuer', 'Kimmich', 'Tah', 'Rüdiger', 'Mittelstädt', 'Andrich', 'Kroos', 'Gündogan', 'Musiala', 'Wirtz', 'Havertz', 'Ter Stegen', 'Raum', 'Schlotterbeck', 'Anton', 'Gross', 'Sané', 'Müller', 'Füllkrug', 'Beier'],
-    'NED': ['Verbruggen', 'Dumfries', 'De Vrij', 'Van Dijk', 'Aké', 'Schouten', 'Reijnders', 'Xavi Simons', 'Frimpong', 'Gakpo', 'Depay', 'Fleken', 'Geertruida', 'De Ligt', 'Van de Ven', 'Wijnaldum', 'Veerman', 'Malen', 'Weghorst', 'Zirkzee'],
-    'URU': ['Rochet', 'Nández', 'Araújo', 'Giménez', 'Olivera', 'Ugarte', 'Valverde', 'De la Cruz', 'Pellistri', 'Darwin Núñez', 'M. Araújo', 'Mele', 'Cáceres', 'Marichal', 'Viña', 'Bentancur', 'Nico de la Cruz', 'Brian Rodríguez', 'Luis Suárez', 'K. Olivera'],
-    'USA': ['Turner', 'Scally', 'Richards', 'Ream', 'A. Robinson', 'McKennie', 'Adams', 'Musah', 'Weah', 'Balogun', 'Pulisic', 'Horvath', 'Carter-Vickers', 'Miles Robinson', 'Lund', 'Johnny Cardoso', 'Reyna', 'De la Torre', 'Pepi', 'Wright'],
-    'MEX': ['J. González', 'J. Sánchez', 'Montes', 'Vásquez', 'Gerardo Arteaga', 'Luis Romo', 'Chávez', 'Érick Sánchez', 'Antuna', 'Santi Giménez', 'Quiñones', 'Rangel', 'Israel Reyes', 'Orozco', 'Bryan González', 'Charly Rodríguez', 'Orbelín Pineda', 'Alexis Vega', 'Memote Martinez', 'Marcelo Flores'],
-    'MAR': ['Bounou', 'Hakimi', 'Aguerd', 'Saïss', 'Mazraoui', 'Amrabat', 'Ounahi', 'Ziyech', 'Brahim Díaz', 'En-Nesyri', 'Ezzalzouli', 'Munir', 'Dari', 'Chibi', 'Amallah', 'Richardson', 'Adli', 'El Kaabi', 'Rahimi', 'Akhomach'],
-    'SEN': ['E. Mendy', 'Koulibaly', 'Niakhaté', 'Diallo', 'Jakobs', 'Pape Gueye', 'Lamine Camara', 'Sarr', 'Sadio Mané', 'Jackson', 'Habib Diallo', 'Dieng', 'Seck', 'Abdoulaye Niakhaté', 'Mendy', 'Gana Gueye', 'Nampalys Mendy', 'Iliman Ndiaye', 'Bamba Dieng', 'Sima'],
-    'ITA': ['Donnarumma', 'Di Lorenzo', 'Bastoni', 'Calafiori', 'Dimarco', 'Jorginho', 'Barella', 'Frattesi', 'Chiesa', 'Pellegrini', 'Scamacca', 'Vicario', 'Darmian', 'Buongiorno', 'Mancini', 'Cristante', 'Fagioli', 'Zaccagni', 'Retegui', 'Raspadori'],
-    'JPN': ['Suzuki', 'Sugawara', 'Itakura', 'Taniguchi', 'Ito', 'Endo', 'Morita', 'Kubo', 'Minamino', 'Doan', 'Ueda', 'Maekawa', 'Machida', 'Watanabe', 'Maeda', 'Kamada', 'Hatate', 'Nakamura', 'Ogawa', 'Mitoma'],
-    'KOR': ['Jo Hyeon-woo', 'Kim Moon-hwan', 'Kim Min-jae', 'Kim Young-gwon', 'Kim Jin-su', 'Hwang In-beom', 'Lee Jae-sung', 'Lee Kang-in', 'Son Heung-min', 'Hwang Hee-chan', 'Cho Gue-sung', 'Song Bum-keun', 'Seol Young-woo', 'Jung Seung-hyun', 'Park Yong-woo', 'Hong Hyun-seok', 'Paik Seung-ho', 'Jeong Woo-yeong', 'Oh Hyeon-gyu', 'Yang Min-hyeok'],
-    'COL': ['Camilo Vargas', 'Daniel Muñoz', 'Davinson Sánchez', 'Cuesta', 'Mojica', 'Richard Ríos', 'Jefferson Lerma', 'Jhon Arias', 'James Rodríguez', 'Luis Díaz', 'Jhon Córdoba', 'Ospina', 'Santiago Arias', 'Yerry Mina', 'Lucumí', 'Mateus Uribe', 'Kevin Castaño', 'Quintero', 'Borré', 'Jhon Durán'],
-    'ECU': ['Domínguez', 'Preciado', 'Félix Torres', 'Pacho', 'Hincapié', 'Gruezo', 'Moisés Caicedo', 'Kendry Páez', 'Yeboah', 'Enner Valencia', 'Sarmiento', 'Ramírez', 'Arboleda', 'Layan Loor', 'Alan Franco', 'Mena', 'Alan Minda', 'Kevin Rodríguez', 'Jordy Caicedo', 'Corozo'],
-    'POR': ['Diogo Costa', 'Cancelo', 'Dias', 'Pepe', 'Mendes', 'Palhinha', 'Vitinha', 'Bernardo Silva', 'Bruno F.', 'Leão', 'Cristiano Ronaldo', 'Sá', 'Dalot', 'Inácio', 'Danilo', 'Neves', 'Neto', 'Jota', 'Ramos', 'Félix'],
-    'CAN': ['Crépeau', 'Johnston', 'Bombito', 'Cornelius', 'Davies', 'Eustaquio', 'Koné', 'Osorio', 'Buchanan', 'David', 'Larin', 'St. Clair', 'Miller', 'Waterman', 'Laryea', 'Choinière', 'Shaffelburg', 'Millar', 'Russell-Rowe', 'Bair'],
-    'BEL': ['Casteels', 'Castagne', 'Faes', 'Vertonghen', 'Theate', 'Onana', 'Mangala', 'De Bruyne', 'Doku', 'Trossard', 'Lukaku', 'Kaminski', 'Meunier', 'Debast', 'Witsel', 'Carrasco', 'Tielemans', 'Vermeeren', 'Bakayoko', 'Openda'],
-    'CRO': ['Livakovic', 'Stanisic', 'Sutalo', 'Gvardiol', 'Sosa', 'Modric', 'Brozovic', 'Kovacic', 'Pasalic', 'Kramaric', 'Budimir', 'Ivusic', 'Vida', 'Erlic', 'Juranovic', 'Majer', 'Sucic', 'Perisic', 'Petkovic', 'Pjaca']
+    'BRA': [
+        'Escudo da Seleção', // #1
+        'Alisson',           // #2
+        'Bento',             // #3
+        'Marquinhos',        // #4
+        'Éder Militão',      // #5
+        'Gabriel Magalhães', // #6
+        'Danilo',            // #7
+        'Wesley',            // #8
+        'Lucas Paquetá',     // #9
+        'Casemiro',          // #10
+        'Bruno Guimarães',   // #11
+        'Luiz Henrique',     // #12
+        'Time Completo',     // #13
+        'Vinícius Júnior',   // #14
+        'Rodrygo',           // #15
+        'João Pedro',        // #16
+        'Matheus Cunha',     // #17
+        'Gabriel Martinelli',// #18
+        'Raphinha',          // #19
+        'Estêvão'            // #20
+    ],
+    'ARG': ['Escudo', 'E. Martínez', 'Molina', 'Romero', 'Otamendi', 'Tagliafico', 'De Paul', 'Enzo F.', 'Mac Allister', 'Lionel Messi', 'J. Álvarez', 'Di María', 'Time Completo', 'Armani', 'Montiel', 'L. Martínez', 'Paredes', 'Lo Celso', 'Garnacho', 'Lautaro M.'],
+    'FRA': ['Escudo', 'Maignan', 'Koundé', 'Saliba', 'Upamecano', 'Theo H.', 'Tchouaméni', 'Camavinga', 'Griezmann', 'Mbappé', 'Dembélé', 'Giroud', 'Time Completo', 'Samba', 'Pavard', 'Konaté', 'Rabiot', 'Zaire-Emery', 'Fofana', 'Kolo Muani', 'Thuram'],
+    'ESP': ['Escudo', 'Unai Simón', 'Carvajal', 'Le Normand', 'Laporte', 'Cucurella', 'Rodri', 'Pedri', 'Fabian Ruiz', 'Lamine Yamal', 'Nico Williams', 'Morata', 'Time Completo', 'Raya', 'Navas', 'Vivian', 'Grimaldo', 'Zubimendi', 'Olmo', 'Baena'],
+    'ENG': ['Escudo', 'Pickford', 'Walker', 'Stones', 'Guehi', 'Trippier', 'Rice', 'Mainoo', 'Bellingham', 'Saka', 'Foden', 'Harry Kane', 'Time Completo', 'Ramsdale', 'Konsa', 'Dunk', 'Joe Gomez', 'Gallagher', 'Palmer', 'Watkins'],
+    'POR': ['Escudo', 'Diogo Costa', 'Cancelo', 'Ruben Dias', 'Pepe', 'Nuno Mendes', 'Palhinha', 'Vitinha', 'Bruno F.', 'Bernardo Silva', 'Rafael Leão', 'C. Ronaldo', 'Time Completo', 'José Sá', 'Dalot', 'Inácio', 'Danilo P.', 'João Félix', 'Gonçalo Ramos', 'Diogo Jota']
 };
 
 let stickers = {};
@@ -139,8 +144,9 @@ function renderGrid() {
         const playerName = PLAYER_NAMES[s.team]?.[s.num - 1] || `${s.team} - Jogador ${s.num}`;
         if (searchQuery && !playerName.toLowerCase().includes(searchQuery.toLowerCase()) && !s.num.toString().includes(searchQuery)) return;
 
+        const isSpecial = s.num === 1 || s.num === 13;
         const card = document.createElement('div');
-        card.className = `sticker-card ${s.have ? 'have' : ''} ${s.repeated > 0 ? 'repeated' : ''}`;
+        card.className = `sticker-card ${s.have ? 'have' : ''} ${s.repeated > 0 ? 'repeated' : ''} ${isSpecial ? 'special' : ''}`;
         card.innerHTML = `
             <div class="sticker-status status-have">OK</div>
             <div class="sticker-status status-repeated">+${s.repeated}</div>

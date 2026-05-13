@@ -263,6 +263,16 @@ select.btn-filter option {
     display: block;
 }
 
+.sticker-card.special {
+    border: 1px solid var(--primary-2026);
+    background: linear-gradient(135deg, var(--card-2026) 0%, #15255a 100%);
+}
+
+.sticker-card.special .sticker-name {
+    color: var(--primary-2026);
+    font-size: 0.9rem;
+}
+
 /* Custom Scrollbar 2026 */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-2026); }
