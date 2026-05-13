@@ -21,31 +21,31 @@ const db = firebase.firestore ? firebase.firestore() : null;
 
 // Configurações e Estado
 const TEAMS = [
-    { name: 'Argentina', code: 'ARG', stickers: 20 }, { name: 'Brasil', code: 'BRA', stickers: 20 },
-    { name: 'Colômbia', code: 'COL', stickers: 20 }, { name: 'Equador', code: 'ECU', stickers: 20 },
-    { name: 'Paraguai', code: 'PAR', stickers: 20 }, { name: 'Uruguai', code: 'URU', stickers: 20 },
-    { name: 'Alemanha', code: 'GER', stickers: 20 }, { name: 'Áustria', code: 'AUT', stickers: 20 },
+    { name: 'África do Sul', code: 'RSA', stickers: 20 }, { name: 'Alemanha', code: 'GER', stickers: 20 },
+    { name: 'Argélia', code: 'ALG', stickers: 20 }, { name: 'Argentina', code: 'ARG', stickers: 20 },
+    { name: 'Austrália', code: 'AUS', stickers: 20 }, { name: 'Áustria', code: 'AUT', stickers: 20 },
     { name: 'Bélgica', code: 'BEL', stickers: 20 }, { name: 'Bósnia e Herz.', code: 'BIH', stickers: 20 },
-    { name: 'Croácia', code: 'CRO', stickers: 20 }, { name: 'Escócia', code: 'SCO', stickers: 20 },
-    { name: 'Espanha', code: 'ESP', stickers: 20 }, { name: 'França', code: 'FRA', stickers: 20 },
-    { name: 'Inglaterra', code: 'ENG', stickers: 20 }, { name: 'Noruega', code: 'NOR', stickers: 20 },
-    { name: 'Holanda', code: 'NED', stickers: 20 }, { name: 'Portugal', code: 'POR', stickers: 20 },
-    { name: 'Rep. Tcheca', code: 'CZE', stickers: 20 }, { name: 'Suécia', code: 'SWE', stickers: 20 },
-    { name: 'Suíça', code: 'SUI', stickers: 20 }, { name: 'Turquia', code: 'TUR', stickers: 20 },
-    { name: 'Canadá (Sede)', code: 'CAN', stickers: 20 }, { name: 'EUA (Sede)', code: 'USA', stickers: 20 },
-    { name: 'México (Sede)', code: 'MEX', stickers: 20 }, { name: 'Curaçau', code: 'CUW', stickers: 20 },
-    { name: 'Haiti', code: 'HAI', stickers: 20 }, { name: 'Panamá', code: 'PAN', stickers: 20 },
-    { name: 'África do Sul', code: 'RSA', stickers: 20 }, { name: 'Argélia', code: 'ALG', stickers: 20 },
-    { name: 'Cabo Verde', code: 'CPV', stickers: 20 }, { name: 'Costa do Marfim', code: 'CIV', stickers: 20 },
-    { name: 'Egito', code: 'EGY', stickers: 20 }, { name: 'Gana', code: 'GHA', stickers: 20 },
-    { name: 'Marrocos', code: 'MAR', stickers: 20 }, { name: 'RD Congo', code: 'COD', stickers: 20 },
-    { name: 'Senegal', code: 'SEN', stickers: 20 }, { name: 'Tunísia', code: 'TUN', stickers: 20 },
-    { name: 'Arábia Saudita', code: 'KSA', stickers: 20 }, { name: 'Austrália', code: 'AUS', stickers: 20 },
-    { name: 'Catar', code: 'QAT', stickers: 20 }, { name: 'Coreia do Sul', code: 'KOR', stickers: 20 },
-    { name: 'Irã', code: 'IRN', stickers: 20 }, { name: 'Iraque', code: 'IRQ', stickers: 20 },
-    { name: 'Japão', code: 'JPN', stickers: 20 }, { name: 'Jordânia', code: 'JOR', stickers: 20 },
-    { name: 'Uzbequistão', code: 'UZB', stickers: 20 }, { name: 'Nova Zelândia', code: 'NZL', stickers: 20 }
-];
+    { name: 'Brasil', code: 'BRA', stickers: 20 }, { name: 'Cabo Verde', code: 'CPV', stickers: 20 },
+    { name: 'Canadá (Sede)', code: 'CAN', stickers: 20 }, { name: 'Catar', code: 'QAT', stickers: 20 },
+    { name: 'Colômbia', code: 'COL', stickers: 20 }, { name: 'Coreia do Sul', code: 'KOR', stickers: 20 },
+    { name: 'Costa do Marfim', code: 'CIV', stickers: 20 }, { name: 'Croácia', code: 'CRO', stickers: 20 },
+    { name: 'Curaçau', code: 'CUW', stickers: 20 }, { name: 'Egito', code: 'EGY', stickers: 20 },
+    { name: 'Equador', code: 'ECU', stickers: 20 }, { name: 'Escócia', code: 'SCO', stickers: 20 },
+    { name: 'Espanha', code: 'ESP', stickers: 20 }, { name: 'EUA (Sede)', code: 'USA', stickers: 20 },
+    { name: 'França', code: 'FRA', stickers: 20 }, { name: 'Gana', code: 'GHA', stickers: 20 },
+    { name: 'Haiti', code: 'HAI', stickers: 20 }, { name: 'Holanda', code: 'NED', stickers: 20 },
+    { name: 'Inglaterra', code: 'ENG', stickers: 20 }, { name: 'Irã', code: 'IRN', stickers: 20 },
+    { name: 'Iraque', code: 'IRQ', stickers: 20 }, { name: 'Japão', code: 'JPN', stickers: 20 },
+    { name: 'Jordânia', code: 'JOR', stickers: 20 }, { name: 'Marrocos', code: 'MAR', stickers: 20 },
+    { name: 'México (Sede)', code: 'MEX', stickers: 20 }, { name: 'Noruega', code: 'NOR', stickers: 20 },
+    { name: 'Nova Zelândia', code: 'NZL', stickers: 20 }, { name: 'Panamá', code: 'PAN', stickers: 20 },
+    { name: 'Paraguai', code: 'PAR', stickers: 20 }, { name: 'Portugal', code: 'POR', stickers: 20 },
+    { name: 'RD Congo', code: 'COD', stickers: 20 }, { name: 'Rep. Tcheca', code: 'CZE', stickers: 20 },
+    { name: 'Arábia Saudita', code: 'KSA', stickers: 20 }, { name: 'Senegal', code: 'SEN', stickers: 20 },
+    { name: 'Suécia', code: 'SWE', stickers: 20 }, { name: 'Suíça', code: 'SUI', stickers: 20 },
+    { name: 'Tunísia', code: 'TUN', stickers: 20 }, { name: 'Turquia', code: 'TUR', stickers: 20 },
+    { name: 'Uruguai', code: 'URU', stickers: 20 }, { name: 'Uzbequistão', code: 'UZB', stickers: 20 }
+].sort((a, b) => a.name.localeCompare(b.name));
 
 const PLAYER_NAMES = {
     'BRA': ['Escudo', 'Alisson', 'Bento', 'Marquinhos', 'Militão', 'G. Magalhães', 'Danilo', 'Wesley', 'Paquetá', 'Casemiro', 'B. Guimarães', 'Luiz Henrique', 'Time', 'Vini Jr', 'Rodrygo', 'João Pedro', 'M. Cunha', 'Martinelli', 'Raphinha', 'Estêvão']
@@ -209,7 +209,15 @@ function renderGrid() {
         if (s.num === 1) playerName = 'Escudo da Seleção';
         if (s.num === 13) playerName = 'Time Completo';
 
-        if (searchQuery && !playerName.toLowerCase().includes(searchQuery.toLowerCase()) && !s.num.toString().includes(searchQuery)) return;
+        const teamName = TEAMS.find(t => t.code === s.team)?.name || '';
+        const searchTerms = searchQuery.toLowerCase();
+        
+        if (searchQuery && 
+            !playerName.toLowerCase().includes(searchTerms) && 
+            !s.num.toString().includes(searchTerms) &&
+            !teamName.toLowerCase().includes(searchTerms) &&
+            !s.team.toLowerCase().includes(searchTerms)
+        ) return;
 
         const isSpecial = s.num === 1 || s.num === 13;
         const card = document.createElement('div');
