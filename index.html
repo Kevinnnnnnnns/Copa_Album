@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Copa Tracker - Gerenciador de Figurinhas</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -18,15 +18,15 @@
             </div>
             
             <div class="stats-card">
-                <div class="stats-text">
+                <div class="stats-text" style="display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 5px;">
                     <span>Progresso da Coleção</span>
                     <span id="progress-percent">0%</span>
                 </div>
                 <div class="progress-container">
                     <div id="main-progress-bar" class="progress-bar"></div>
                 </div>
-                <div class="stats-text" style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">
-                    <span id="stats-total">Tenho: 0 / 670</span>
+                <div class="stats-text" style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); display: flex; justify-content: space-between;">
+                    <span id="stats-total">Tenho: 0 / 0</span>
                     <span id="stats-repeated">Repetidas: 0</span>
                 </div>
             </div>
@@ -35,6 +35,7 @@
 
     <main class="container">
         <section class="controls">
+            <!-- Team selector will be injected here -->
             <div class="filters">
                 <button class="btn-filter active" data-filter="all">Todas</button>
                 <button class="btn-filter" data-filter="missing">Faltantes</button>
@@ -43,7 +44,7 @@
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-input" placeholder="Buscar figurinha pelo número...">
+                <input type="text" id="search-input" placeholder="Buscar por jogador ou número...">
             </div>
         </section>
 
@@ -52,6 +53,6 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2.0"></script>
 </body>
 </html>
