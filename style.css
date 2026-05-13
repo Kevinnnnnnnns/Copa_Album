@@ -103,6 +103,32 @@ header {
     border-radius: 30px;
     color: white;
     width: 300px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-container input:focus {
+    border-color: var(--accent-2026);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.search-container input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Fix para o Select de Seleções */
+select.btn-filter {
+    background-color: var(--card-2026);
+    color: white;
+    cursor: pointer;
+    outline: none;
+    padding-right: 2rem;
+}
+
+select.btn-filter option {
+    background-color: var(--bg-2026);
+    color: white;
 }
 
 /* Album Card Design */
