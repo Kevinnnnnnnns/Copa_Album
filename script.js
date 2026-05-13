@@ -1,41 +1,40 @@
-// Configurações e Estado - Copa 2026
+// Configurações e Estado - Copa 2026 (Lista Final 48 Seleções)
 const TEAMS = [
-    // América do Norte (Anfitriões)
-    { name: 'Canadá', code: 'CAN', stickers: 20 },
-    { name: 'Estados Unidos', code: 'USA', stickers: 20 },
-    { name: 'México', code: 'MEX', stickers: 20 },
-    
     // América do Sul (CONMEBOL)
-    { name: 'Argentina', code: 'ARG', stickers: 20 },
-    { name: 'Brasil', code: 'BRA', stickers: 20 },
-    { name: 'Colômbia', code: 'COL', stickers: 20 },
-    { name: 'Equador', code: 'ECU', stickers: 20 },
-    { name: 'Paraguai', code: 'PAR', stickers: 20 },
-    { name: 'Uruguai', code: 'URU', stickers: 20 },
+    { name: 'Argentina', code: 'ARG', stickers: 20 }, { name: 'Brasil', code: 'BRA', stickers: 20 },
+    { name: 'Colômbia', code: 'COL', stickers: 20 }, { name: 'Equador', code: 'ECU', stickers: 20 },
+    { name: 'Paraguai', code: 'PAR', stickers: 20 }, { name: 'Uruguai', code: 'URU', stickers: 20 },
     
     // Europa (UEFA)
-    { name: 'Alemanha', code: 'GER', stickers: 20 },
-    { name: 'França', code: 'FRA', stickers: 20 },
-    { name: 'Inglaterra', code: 'ENG', stickers: 20 },
-    { name: 'Espanha', code: 'ESP', stickers: 20 },
-    { name: 'Portugal', code: 'POR', stickers: 20 },
-    { name: 'Itália', code: 'ITA', stickers: 20 },
-    { name: 'Holanda', code: 'NED', stickers: 20 },
-    { name: 'Bélgica', code: 'BEL', stickers: 20 },
-    { name: 'Croácia', code: 'CRO', stickers: 20 },
+    { name: 'Alemanha', code: 'GER', stickers: 20 }, { name: 'Áustria', code: 'AUT', stickers: 20 },
+    { name: 'Bélgica', code: 'BEL', stickers: 20 }, { name: 'Bósnia e Herz.', code: 'BIH', stickers: 20 },
+    { name: 'Croácia', code: 'CRO', stickers: 20 }, { name: 'Escócia', code: 'SCO', stickers: 20 },
+    { name: 'Espanha', code: 'ESP', stickers: 20 }, { name: 'França', code: 'FRA', stickers: 20 },
+    { name: 'Inglaterra', code: 'ENG', stickers: 20 }, { name: 'Noruega', code: 'NOR', stickers: 20 },
+    { name: 'Holanda', code: 'NED', stickers: 20 }, { name: 'Portugal', code: 'POR', stickers: 20 },
+    { name: 'Rep. Tcheca', code: 'CZE', stickers: 20 }, { name: 'Suécia', code: 'SWE', stickers: 20 },
+    { name: 'Suíça', code: 'SUI', stickers: 20 }, { name: 'Turquia', code: 'TUR', stickers: 20 },
     
-    // Ásia (AFC) e África (CAF)
-    { name: 'Japão', code: 'JPN', stickers: 20 },
-    { name: 'Coreia do Sul', code: 'KOR', stickers: 20 },
-    { name: 'Arábia Saudita', code: 'KSA', stickers: 20 },
-    { name: 'Marrocos', code: 'MAR', stickers: 20 },
-    { name: 'Senegal', code: 'SEN', stickers: 20 },
-    { name: 'Egito', code: 'EGY', stickers: 20 },
+    // Concacaf
+    { name: 'Canadá (Sede)', code: 'CAN', stickers: 20 }, { name: 'EUA (Sede)', code: 'USA', stickers: 20 },
+    { name: 'México (Sede)', code: 'MEX', stickers: 20 }, { name: 'Curaçau (Estreante)', code: 'CUW', stickers: 20 },
+    { name: 'Haiti', code: 'HAI', stickers: 20 }, { name: 'Panamá', code: 'PAN', stickers: 20 },
     
-    // Concacaf e OFC
-    { name: 'Panamá', code: 'PAN', stickers: 20 },
-    { name: 'Haiti', code: 'HAI', stickers: 20 },
-    { name: 'Curaçau', code: 'CUW', stickers: 20 },
+    // África (CAF)
+    { name: 'África do Sul', code: 'RSA', stickers: 20 }, { name: 'Argélia', code: 'ALG', stickers: 20 },
+    { name: 'Cabo Verde (Est.)', code: 'CPV', stickers: 20 }, { name: 'Costa do Marfim', code: 'CIV', stickers: 20 },
+    { name: 'Egito', code: 'EGY', stickers: 20 }, { name: 'Gana', code: 'GHA', stickers: 20 },
+    { name: 'Marrocos', code: 'MAR', stickers: 20 }, { name: 'RD Congo', code: 'COD', stickers: 20 },
+    { name: 'Senegal', code: 'SEN', stickers: 20 }, { name: 'Tunísia', code: 'TUN', stickers: 20 },
+    
+    // Ásia (AFC)
+    { name: 'Arábia Saudita', code: 'KSA', stickers: 20 }, { name: 'Austrália', code: 'AUS', stickers: 20 },
+    { name: 'Catar', code: 'QAT', stickers: 20 }, { name: 'Coreia do Sul', code: 'KOR', stickers: 20 },
+    { name: 'Irã', code: 'IRN', stickers: 20 }, { name: 'Iraque', code: 'IRQ', stickers: 20 },
+    { name: 'Japão', code: 'JPN', stickers: 20 }, { name: 'Jordânia', code: 'JOR', stickers: 20 },
+    { name: 'Uzbequistão (Est.)', code: 'UZB', stickers: 20 },
+    
+    // Oceania (OFC)
     { name: 'Nova Zelândia', code: 'NZL', stickers: 20 }
 ];
 
@@ -88,7 +87,7 @@ function renderTeamFilter() {
 }
 
 function loadData() {
-    const saved = localStorage.getItem('copa-tracker-v4');
+    const saved = localStorage.getItem('copa-tracker-v5');
     if (saved) {
         stickers = JSON.parse(saved);
     } else {
@@ -103,7 +102,7 @@ function loadData() {
 }
 
 function saveData() {
-    localStorage.setItem('copa-tracker-v4', JSON.stringify(stickers));
+    localStorage.setItem('copa-tracker-v5', JSON.stringify(stickers));
 }
 
 function updateStats() {
