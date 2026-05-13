@@ -1,21 +1,23 @@
 // Configurações e Estado
 const TEAMS = [
-    { name: 'Brasil', code: 'BRA', stickers: 20 },
-    { name: 'Argentina', code: 'ARG', stickers: 20 },
-    { name: 'França', code: 'FRA', stickers: 20 },
-    { name: 'Alemanha', code: 'GER', stickers: 20 },
-    { name: 'Portugal', code: 'POR', stickers: 20 },
-    { name: 'Espanha', code: 'ESP', stickers: 20 },
-    { name: 'Inglaterra', code: 'ENG', stickers: 20 },
-    { name: 'Bélgica', code: 'BEL', stickers: 20 },
-    { name: 'Holanda', code: 'NED', stickers: 20 },
-    { name: 'Uruguai', code: 'URU', stickers: 20 },
-    { name: 'Croácia', code: 'CRO', stickers: 20 },
-    { name: 'Senegal', code: 'SEN', stickers: 20 }
-    // Adicione mais se necessário, vamos focar nos principais para o exemplo ser robusto
+    { name: 'Catar', code: 'QAT', stickers: 20 }, { name: 'Equador', code: 'ECU', stickers: 20 },
+    { name: 'Senegal', code: 'SEN', stickers: 20 }, { name: 'Holanda', code: 'NED', stickers: 20 },
+    { name: 'Inglaterra', code: 'ENG', stickers: 20 }, { name: 'Irã', code: 'IRN', stickers: 20 },
+    { name: 'EUA', code: 'USA', stickers: 20 }, { name: 'Gales', code: 'WAL', stickers: 20 },
+    { name: 'Argentina', code: 'ARG', stickers: 20 }, { name: 'Arábia Saudita', code: 'KSA', stickers: 20 },
+    { name: 'México', code: 'MEX', stickers: 20 }, { name: 'Polônia', code: 'POL', stickers: 20 },
+    { name: 'França', code: 'FRA', stickers: 20 }, { name: 'Austrália', code: 'AUS', stickers: 20 },
+    { name: 'Dinamarca', code: 'DEN', stickers: 20 }, { name: 'Tunísia', code: 'TUN', stickers: 20 },
+    { name: 'Espanha', code: 'ESP', stickers: 20 }, { name: 'Costa Rica', code: 'CRC', stickers: 20 },
+    { name: 'Alemanha', code: 'GER', stickers: 20 }, { name: 'Japão', code: 'JPN', stickers: 20 },
+    { name: 'Bélgica', code: 'BEL', stickers: 20 }, { name: 'Canadá', code: 'CAN', stickers: 20 },
+    { name: 'Marrocos', code: 'MAR', stickers: 20 }, { name: 'Croácia', code: 'CRO', stickers: 20 },
+    { name: 'Brasil', code: 'BRA', stickers: 20 }, { name: 'Sérvia', code: 'SRB', stickers: 20 },
+    { name: 'Suíça', code: 'SUI', stickers: 20 }, { name: 'Camarões', code: 'CMR', stickers: 20 },
+    { name: 'Portugal', code: 'POR', stickers: 20 }, { name: 'Gana', code: 'GHA', stickers: 20 },
+    { name: 'Uruguai', code: 'URU', stickers: 20 }, { name: 'Coreia do Sul', code: 'KOR', stickers: 20 }
 ];
 
-// Nomes simulados para os principais times para dar vida ao app
 const PLAYER_NAMES = {
     'BRA': ['Alisson', 'Danilo', 'Thiago Silva', 'Marquinhos', 'Casemiro', 'Neymar', 'Richarlison', 'Vinícius Jr', 'Raphinha', 'Paquetá', 'Ederson', 'Weverton', 'Dani Alves', 'Éder Militão', 'Alex Sandro', 'Fred', 'Fabinho', 'Bruno Guimarães', 'Antony', 'Gabriel Jesus'],
     'ARG': ['Emiliano Martínez', 'Otamendi', 'Romero', 'Tagliafico', 'De Paul', 'Enzo Fernández', 'Mac Allister', 'Lionel Messi', 'Julián Álvarez', 'Di María', 'Lautaro Martínez', 'Montiel', 'Lisandro Martínez', 'Paredes', 'Guido Rodríguez', 'Dybala', 'Correa', 'Armani', 'Acunã', 'Molina']
@@ -35,7 +37,6 @@ const statsRepeated = document.getElementById('stats-repeated');
 const searchInput = document.getElementById('search-input');
 const filterBtns = document.querySelectorAll('.btn-filter');
 
-// Inicialização
 function init() {
     loadData();
     renderTeamFilter();
@@ -44,18 +45,21 @@ function init() {
     setupEventListeners();
 }
 
-// Gerar filtros de times
 function renderTeamFilter() {
     const controls = document.querySelector('.controls');
-    const teamSelect = document.createElement('div');
-    teamSelect.className = 'team-selector';
-    teamSelect.innerHTML = `
+    let teamSelector = document.querySelector('.team-selector');
+    if (!teamSelector) {
+        teamSelector = document.createElement('div');
+        teamSelector.className = 'team-selector';
+        controls.prepend(teamSelector);
+    }
+    
+    teamSelector.innerHTML = `
         <select id="team-filter" class="btn-filter">
             <option value="all">Todas as Seleções</option>
             ${TEAMS.map(t => `<option value="${t.code}">${t.name}</option>`).join('')}
         </select>
     `;
-    controls.prepend(teamSelect);
 
     document.getElementById('team-filter').addEventListener('change', (e) => {
         currentTeam = e.target.value;
@@ -64,11 +68,10 @@ function renderTeamFilter() {
 }
 
 function loadData() {
-    const saved = localStorage.getItem('copa-tracker-v2');
+    const saved = localStorage.getItem('copa-tracker-v3');
     if (saved) {
         stickers = JSON.parse(saved);
     } else {
-        // Inicializa com estrutura por time
         TEAMS.forEach(team => {
             for (let i = 1; i <= team.stickers; i++) {
                 const id = `${team.code}-${i}`;
@@ -80,7 +83,7 @@ function loadData() {
 }
 
 function saveData() {
-    localStorage.setItem('copa-tracker-v2', JSON.stringify(stickers));
+    localStorage.setItem('copa-tracker-v3', JSON.stringify(stickers));
 }
 
 function updateStats() {
@@ -101,27 +104,19 @@ function renderGrid() {
     Object.keys(stickers).forEach(id => {
         const s = stickers[id];
         
-        // Filtro por Time
         if (currentTeam !== 'all' && s.team !== currentTeam) return;
-        
-        // Filtro por Estado
         if (currentFilter === 'missing' && s.have) return;
         if (currentFilter === 'have' && !s.have) return;
         if (currentFilter === 'repeated' && s.repeated === 0) return;
         
-        // Busca
         const playerName = PLAYER_NAMES[s.team]?.[s.num - 1] || `Jogador ${s.num}`;
         if (searchQuery && !playerName.toLowerCase().includes(searchQuery.toLowerCase()) && !s.num.toString().includes(searchQuery)) return;
 
-        const avatarSeed = `${s.team}-${s.num}`;
         const card = document.createElement('div');
         card.className = `sticker-card ${s.have ? 'have' : ''} ${s.repeated > 0 ? 'repeated' : ''}`;
         card.innerHTML = `
             <div class="sticker-status status-have">OK</div>
             <div class="sticker-status status-repeated">+${s.repeated}</div>
-            <div class="sticker-image">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${avatarSeed}" alt="${playerName}">
-            </div>
             <div class="sticker-info">
                 <span class="sticker-team-badge">${s.team}</span>
                 <div class="sticker-name">${playerName}</div>
@@ -129,7 +124,7 @@ function renderGrid() {
             </div>
             <div class="sticker-actions">
                 <button class="btn-action btn-have ${s.have ? 'active' : ''}" onclick="toggleHave('${id}')">
-                    ${s.have ? 'Remover' : 'Tenho'}
+                    ${s.have ? 'Tenho' : 'Marcar'}
                 </button>
                 <button class="btn-action btn-repeated ${s.repeated > 0 ? 'active' : ''}" onclick="addRepeated('${id}')">
                     Repetida
@@ -149,12 +144,9 @@ window.toggleHave = (id) => {
 };
 
 window.addRepeated = (id) => {
-    if (!stickers[id].have) {
-        stickers[id].have = true;
-    } else {
-        stickers[id].repeated++;
-        if (stickers[id].repeated > 10) stickers[id].repeated = 0;
-    }
+    if (!stickers[id].have) stickers[id].have = true;
+    stickers[id].repeated++;
+    if (stickers[id].repeated > 10) stickers[id].repeated = 0;
     saveData();
     updateStats();
     renderGrid();
