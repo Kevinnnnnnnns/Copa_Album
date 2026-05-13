@@ -197,7 +197,14 @@ async function saveToCloud() {
 function renderGrid() {
     grid.innerHTML = '';
     
-    Object.keys(stickers).forEach(id => {
+    Object.keys(stickers)
+        .sort((a, b) => {
+            const [teamA, numA] = a.split('-');
+            const [teamB, numB] = b.split('-');
+            if (teamA !== teamB) return teamA.localeCompare(teamB);
+            return parseInt(numA) - parseInt(numB);
+        })
+        .forEach(id => {
         const s = stickers[id];
         
         if (currentTeam !== 'all' && s.team !== currentTeam) return;
