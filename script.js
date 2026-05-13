@@ -273,7 +273,7 @@ function renderTeamFilter() {
     }
     
     teamSelector.innerHTML = `
-        <select id="team-filter" class="btn-filter" style="padding: 0.8rem 1.5rem; border-radius: 16px; border: 2px solid #f0f3f5; font-weight: 700;">
+        <select id="team-filter" class="btn-filter">
             <option value="all">Todas as Seleções</option>
             ${TEAMS.map(t => `<option value="${t.code}">${t.name}</option>`).join('')}
         </select>
