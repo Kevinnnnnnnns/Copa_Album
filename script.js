@@ -214,7 +214,6 @@ function renderGrid() {
         const card = document.createElement('div');
         card.className = `sticker-card ${s.have ? 'have' : ''} ${s.repeated > 0 ? 'repeated' : ''} ${isSpecial ? 'special' : ''}`;
         card.innerHTML = `
-            <div class="sticker-status">OK</div>
             <div class="status-repeated">+${s.repeated}</div>
             <div class="sticker-info">
                 <span class="sticker-team-badge">${s.team}</span>
