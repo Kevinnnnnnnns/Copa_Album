@@ -147,7 +147,7 @@ async function loadDataFromCloud() {
     if (!db) return;
     const doc = await db.collection('users').doc(currentUser.uid).get();
     if (doc.exists) {
-        stickers = doc.data().stickers;
+        stickers = mergeStickers(doc.data().stickers);
     } else {
         generateInitialData();
         await saveToCloud();
@@ -159,7 +159,7 @@ async function loadDataFromCloud() {
 function loadDataLocal() {
     const saved = localStorage.getItem('album-copa-v12');
     if (saved) {
-        stickers = JSON.parse(saved);
+        stickers = mergeStickers(JSON.parse(saved));
     } else {
         generateInitialData();
     }
@@ -171,12 +171,27 @@ function generateInitialData() {
     stickers = {};
     TEAMS.forEach(team => {
         const start = team.start !== undefined ? team.start : 1;
-        
         for (let i = start; i < start + team.stickers; i++) {
             const id = `${team.code}-${i}`;
             stickers[id] = { have: false, repeated: 0, team: team.code, num: i, image: '' };
         }
     });
+}
+
+function mergeStickers(savedStickers) {
+    const newStickers = {};
+    TEAMS.forEach(team => {
+        const start = team.start !== undefined ? team.start : 1;
+        for (let i = start; i < start + team.stickers; i++) {
+            const id = `${team.code}-${i}`;
+            if (savedStickers[id]) {
+                newStickers[id] = savedStickers[id];
+            } else {
+                newStickers[id] = { have: false, repeated: 0, team: team.code, num: i, image: '' };
+            }
+        }
+    });
+    return newStickers;
 }
 
 function saveData() {
