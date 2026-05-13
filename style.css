@@ -1,0 +1,256 @@
+:root {
+    --primary-color: #8A1538; /* Qatar Maroon */
+    --secondary-color: #FFD700; /* Gold */
+    --bg-dark: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text-white: #ffffff;
+    --text-muted: #a0a0a0;
+    --success: #00E676;
+    --accent: #2979FF;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+    overflow-x: hidden;
+}
+
+/* Header & Progress Section */
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #4a0a1d 100%);
+    padding: 2rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.title-area h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(to bottom, #fff, var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stats-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    min-width: 250px;
+}
+
+.progress-container {
+    margin-top: 10px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--success));
+    width: 0%;
+    transition: width 0.5s ease-out;
+}
+
+.stats-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Controls Section */
+.controls {
+    padding: 2rem 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-filter {
+    background: var(--card-bg);
+    color: var(--text-white);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-filter.active {
+    background: var(--secondary-color);
+    color: var(--bg-dark);
+}
+
+.search-container {
+    flex-grow: 1;
+    max-width: 400px;
+    position: relative;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.search-container input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Sticker Grid */
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.sticker-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.sticker-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--secondary-color);
+}
+
+.sticker-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+}
+
+.sticker-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btn-action {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+}
+
+.btn-have {
+    background: rgba(0, 230, 118, 0.1);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.btn-have.active {
+    background: var(--success);
+    color: white;
+}
+
+.btn-repeated {
+    background: rgba(41, 121, 255, 0.1);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+.btn-repeated.active {
+    background: var(--accent);
+    color: white;
+}
+
+.sticker-status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: none;
+}
+
+.sticker-card.have .sticker-status.status-have {
+    display: block;
+    background: var(--success);
+    color: black;
+}
+
+.sticker-card.repeated .sticker-status.status-repeated {
+    display: block;
+    background: var(--accent);
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .sticker-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+}
