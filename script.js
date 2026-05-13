@@ -100,7 +100,7 @@ function renderTeamFilter() {
 }
 
 function loadData() {
-    const saved = localStorage.getItem('copa-tracker-v6');
+    const saved = localStorage.getItem('copa-tracker-v10');
     if (saved) {
         stickers = JSON.parse(saved);
     } else {
@@ -115,7 +115,7 @@ function loadData() {
 }
 
 function saveData() {
-    localStorage.setItem('copa-tracker-v6', JSON.stringify(stickers));
+    localStorage.setItem('copa-tracker-v10', JSON.stringify(stickers));
 }
 
 function updateStats() {
@@ -141,7 +141,12 @@ function renderGrid() {
         if (currentFilter === 'have' && !s.have) return;
         if (currentFilter === 'repeated' && s.repeated === 0) return;
         
-        const playerName = PLAYER_NAMES[s.team]?.[s.num - 1] || `${s.team} - Jogador ${s.num}`;
+        let playerName = PLAYER_NAMES[s.team]?.[s.num - 1] || `${s.team} - Jogador ${s.num}`;
+        
+        // Regra Universal: #1 é Escudo, #13 é Time
+        if (s.num === 1) playerName = 'Escudo da Seleção';
+        if (s.num === 13) playerName = 'Time Completo';
+        
         if (searchQuery && !playerName.toLowerCase().includes(searchQuery.toLowerCase()) && !s.num.toString().includes(searchQuery)) return;
 
         const isSpecial = s.num === 1 || s.num === 13;
