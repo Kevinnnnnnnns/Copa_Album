@@ -146,6 +146,16 @@ header::before {
     color: white;
 }
 
+.btn-report {
+    background: var(--panini-green);
+    color: white;
+}
+
+.btn-report:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+}
+
 .search-container input {
     background: #f0f3f5;
     border: 2px solid transparent;

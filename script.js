@@ -283,6 +283,54 @@ function renderTeamFilter() {
         currentTeam = e.target.value;
         renderGrid();
     });
+
+    document.getElementById('generate-report-btn').addEventListener('click', generateReport);
+}
+
+function generateReport() {
+    let report = "=== RELATÓRIO ÁLBUM COPA 2026 ===\n";
+    report += `Data: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}\n`;
+    
+    const owned = Object.values(stickers).filter(s => s.have).length;
+    const total = Object.keys(stickers).length;
+    const repeated = Object.values(stickers).reduce((acc, s) => acc + s.repeated, 0);
+    
+    report += `Progresso: ${owned} / ${total} (${Math.round((owned/total)*100)}%)\n`;
+    report += `Total de Repetidas: ${repeated}\n\n`;
+    
+    report += "--- MINHAS FIGURINHAS ---\n";
+    
+    TEAMS.forEach(team => {
+        const teamStickers = Object.keys(stickers)
+            .filter(id => id.startsWith(team.code))
+            .map(id => ({ id, ...stickers[id] }));
+        
+        const myStickers = teamStickers.filter(s => s.have || s.repeated > 0);
+        
+        if (myStickers.length > 0) {
+            report += `\n[${team.name}]\n`;
+            myStickers.forEach(s => {
+                let name = PLAYER_NAMES[s.team]?.[s.num - 1] || `Jogador ${s.num}`;
+                if (s.num === 1) name = 'Escudo';
+                if (s.num === 13) name = 'Time Completo';
+                
+                let status = s.have ? "Tenho" : "Só Repetida";
+                if (s.repeated > 0) status += ` (+${s.repeated} repetidas)`;
+                
+                report += `#${s.num} ${name.padEnd(20)} | ${status}\n`;
+            });
+        }
+    });
+
+    const blob = new Blob([report], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `relatorio_album_2026_${new Date().getTime()}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 function setupEventListeners() {
