@@ -44,7 +44,8 @@ const TEAMS = [
     { name: 'Arábia Saudita', code: 'KSA', stickers: 20 }, { name: 'Senegal', code: 'SEN', stickers: 20 },
     { name: 'Suécia', code: 'SWE', stickers: 20 }, { name: 'Suíça', code: 'SUI', stickers: 20 },
     { name: 'Tunísia', code: 'TUN', stickers: 20 }, { name: 'Turquia', code: 'TUR', stickers: 20 },
-    { name: 'Uruguai', code: 'URU', stickers: 20 }, { name: 'Uzbequistão', code: 'UZB', stickers: 20 }
+    { name: 'Uruguai', code: 'URU', stickers: 20 }, { name: 'Uzbequistão', code: 'UZB', stickers: 20 },
+    { name: 'Coca-Cola', code: 'CC', stickers: 14 }, { name: 'FIFA (FWC)', code: 'FWC', stickers: 20, start: 0 }
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 const PLAYER_NAMES = {
@@ -169,9 +170,11 @@ function loadDataLocal() {
 function generateInitialData() {
     stickers = {};
     TEAMS.forEach(team => {
-        for (let i = 1; i <= team.stickers; i++) {
+        const start = team.start !== undefined ? team.start : 1;
+        
+        for (let i = start; i < start + team.stickers; i++) {
             const id = `${team.code}-${i}`;
-            stickers[id] = { have: false, repeated: 0, team: team.code, num: i };
+            stickers[id] = { have: false, repeated: 0, team: team.code, num: i, image: '' };
         }
     });
 }
@@ -213,8 +216,11 @@ function renderGrid() {
         if (currentFilter === 'repeated' && s.repeated === 0) return;
         
         let playerName = PLAYER_NAMES[s.team]?.[s.num - 1] || `${s.team} - Jogador ${s.num}`;
-        if (s.num === 1) playerName = 'Escudo da Seleção';
-        if (s.num === 13) playerName = 'Time Completo';
+        if (s.num === 1 && s.team !== 'CC' && s.team !== 'FWC') playerName = 'Escudo da Seleção';
+        if (s.num === 13 && s.team !== 'CC' && s.team !== 'FWC') playerName = 'Time Completo';
+        
+        if (s.team === 'CC') playerName = `Coca-Cola #${s.num}`;
+        if (s.team === 'FWC') playerName = `FIFA FWC #${s.num}`;
 
         const teamName = TEAMS.find(t => t.code === s.team)?.name || '';
         const searchTerms = searchQuery.toLowerCase();
