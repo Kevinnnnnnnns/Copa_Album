@@ -1,11 +1,12 @@
 // CONFIGURAÇÃO DO FIREBASE (Você deve substituir pelos seus dados do console do Firebase)
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_PROJETO.firebaseapp.com",
-    projectId: "SEU_PROJETO",
-    storageBucket: "SEU_PROJETO.appspot.com",
-    messagingSenderId: "SEU_SENDER_ID",
-    appId: "SEU_APP_ID"
+    apiKey: "AIzaSyAkdEi54zUDH7soaJqpsUOSRGAF4vyYZCE",
+    authDomain: "albumcopa-cf003.firebaseapp.com",
+    projectId: "albumcopa-cf003",
+    storageBucket: "albumcopa-cf003.firebasestorage.app",
+    messagingSenderId: "844864114817",
+    appId: "1:844864114817:web:83166e1c1691684b4cfd80",
+    measurementId: "G-DEFWTX53R"
 };
 
 // Inicializa Firebase (Caso as chaves sejam válidas)
