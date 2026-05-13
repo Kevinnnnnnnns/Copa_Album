@@ -100,7 +100,7 @@ function renderTeamFilter() {
 }
 
 function loadData() {
-    const saved = localStorage.getItem('copa-tracker-v10');
+    const saved = localStorage.getItem('copa-tracker-v11');
     if (saved) {
         stickers = JSON.parse(saved);
     } else {
@@ -115,7 +115,7 @@ function loadData() {
 }
 
 function saveData() {
-    localStorage.setItem('copa-tracker-v10', JSON.stringify(stickers));
+    localStorage.setItem('copa-tracker-v11', JSON.stringify(stickers));
 }
 
 function updateStats() {

@@ -1,276 +1,263 @@
 :root {
-    --primary-2026: #ccff00; /* Neon Lime */
-    --accent-2026: #00f2ff;  /* Cyan */
-    --magenta-2026: #ff00ff; /* Magenta */
-    --bg-2026: #020b30;      /* Deep Navy */
-    --card-2026: #0b1a4a;    /* Modular Blue */
-    --text-white: #ffffff;
-    --transition: all 0.25s ease;
-    --sticker-radius: 8px;
+    --panini-yellow: #f9e110;
+    --panini-red: #e84a27;
+    --panini-blue: #00aae4;
+    --panini-green: #00a651;
+    --panini-navy: #004d98;
+    --bg-light: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-dark: #00153a;
+    --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
 }
 
 body {
-    background-color: var(--bg-2026);
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(204, 255, 0, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.05) 0px, transparent 50%);
-    color: var(--text-white);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
     min-height: 100vh;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 170, 228, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(232, 74, 39, 0.03) 0%, transparent 20%);
 }
 
-/* Header Estilo 2026 */
+/* Header Estilo Capa 2026 */
 header {
-    background: rgba(2, 11, 48, 0.8);
-    backdrop-filter: blur(20px);
-    padding: 2rem 1rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background: var(--panini-navy);
+    background-image: 
+        linear-gradient(135deg, var(--panini-navy) 0%, #002d5a 100%),
+        radial-gradient(circle at 20% 50%, var(--panini-red) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--panini-yellow) 0%, transparent 40%);
+    background-blend-mode: overlay;
+    padding: 3rem 1rem;
+    color: white;
+    box-shadow: 0 10px 40px rgba(0, 77, 152, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '2026';
+    position: absolute;
+    right: -20px;
+    bottom: -30px;
+    font-size: 15rem;
+    font-weight: 900;
+    opacity: 0.1;
+    color: white;
+    letter-spacing: -10px;
 }
 
 .title-area h1 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -2px;
-    background: linear-gradient(45deg, var(--primary-2026), var(--accent-2026));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1;
+}
+
+.title-area h1 span {
+    display: block;
+    color: var(--panini-yellow);
+    font-size: 2rem;
 }
 
 .stats-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 350px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-radius: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    min-width: 320px;
 }
 
 .progress-container {
-    margin: 10px 0;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    margin: 15px 0;
+    height: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-2026), var(--accent-2026));
-    border-radius: 10px;
-    box-shadow: 0 0 15px var(--primary-2026);
+    background: linear-gradient(90deg, var(--panini-yellow), var(--panini-green));
+    border-radius: 20px;
+    box-shadow: 0 0 20px var(--panini-yellow);
 }
 
 /* Controls */
 .controls {
-    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: -30px auto 0;
+    padding: 2rem;
+    background: white;
+    border-radius: 30px;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
     align-items: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 100;
 }
 
 .btn-filter {
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    padding: 0.7rem 1.2rem;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f0f3f5;
+    color: var(--text-dark);
+    padding: 0.8rem 1.5rem;
+    border-radius: 16px;
+    border: 2px solid transparent;
     cursor: pointer;
     font-weight: 700;
-    font-size: 0.9rem;
     transition: var(--transition);
 }
 
 .btn-filter.active {
-    background: var(--primary-2026);
-    color: var(--bg-2026);
-    border-color: var(--primary-2026);
+    background: var(--panini-navy);
+    color: white;
 }
 
 .search-container input {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f0f3f5;
+    border: 2px solid transparent;
     padding: 0.8rem 1.5rem;
-    border-radius: 30px;
-    color: white;
-    width: 300px;
-    outline: none;
-    transition: var(--transition);
+    border-radius: 16px;
+    color: var(--text-dark);
+    width: 350px;
+    font-weight: 600;
 }
 
 .search-container input:focus {
-    border-color: var(--accent-2026);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
-}
-
-.search-container input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-}
-
-/* Fix para o Select de Seleções */
-select.btn-filter {
-    background-color: var(--card-2026);
-    color: white;
-    cursor: pointer;
+    border-color: var(--panini-blue);
+    background: white;
     outline: none;
-    padding-right: 2rem;
-}
-
-select.btn-filter option {
-    background-color: var(--bg-2026);
-    color: white;
 }
 
 /* Album Card Design */
 .sticker-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 2rem;
+    padding: 4rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .sticker-card {
-    background: var(--card-2026);
-    aspect-ratio: 3/4;
-    border-radius: var(--sticker-radius);
+    background: var(--card-bg);
+    aspect-ratio: 3/4.2;
+    border-radius: 20px;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     transition: var(--transition);
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-}
-
-.sticker-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 10px 10px;
-    pointer-events: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
 .sticker-card:hover {
-    transform: scale(1.05);
-    border-color: var(--accent-2026);
-    z-index: 10;
+    transform: translateY(-10px) rotate(2deg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
 }
 
 .sticker-info {
     flex-grow: 1;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
     text-align: center;
-    position: relative;
+    background: linear-gradient(to bottom, #fff, #f9f9f9);
 }
 
 .sticker-team-badge {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 0.65rem;
+    top: 15px;
+    left: 15px;
+    font-size: 0.75rem;
     font-weight: 900;
-    color: var(--accent-2026);
-    opacity: 0.6;
+    color: var(--panini-blue);
+    background: rgba(0, 170, 228, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
 }
 
 .sticker-number {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 0.8rem;
+    top: 15px;
+    right: 15px;
+    font-size: 0.9rem;
     font-weight: 900;
-    color: var(--primary-2026);
+    color: var(--panini-red);
 }
 
 .sticker-name {
-    font-size: 1rem;
-    font-weight: 800;
-    line-height: 1.2;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--panini-navy);
     text-transform: uppercase;
 }
 
 .sticker-actions {
     display: flex;
-    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 .btn-action {
     flex: 1;
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.4);
-    padding: 0.6rem;
-    font-size: 0.7rem;
+    padding: 1rem;
+    font-size: 0.8rem;
     font-weight: 800;
-    text-transform: uppercase;
+    border: none;
     cursor: pointer;
+    background: white;
     transition: var(--transition);
 }
 
-.btn-have.active {
-    background: var(--primary-2026);
-    color: var(--bg-2026);
+.btn-have:hover { background: var(--panini-green); color: white; }
+.btn-repeated:hover { background: var(--panini-yellow); color: var(--panini-navy); }
+
+.btn-have.active { background: var(--panini-green); color: white; }
+.btn-repeated.active { background: var(--panini-yellow); color: var(--panini-navy); }
+
+/* Especial Stickers */
+.sticker-card.special {
+    background: linear-gradient(45deg, var(--panini-yellow), #fff);
+    border: 3px solid var(--panini-yellow);
 }
 
-.btn-repeated.active {
-    background: var(--accent-2026);
-    color: var(--bg-2026);
-}
-
-.sticker-status {
+.sticker-card.special::after {
+    content: '★';
     position: absolute;
-    inset: 0;
-    background: rgba(204, 255, 0, 0.1);
-    border: 2px solid var(--primary-2026);
-    border-radius: var(--sticker-radius);
-    display: none;
-    pointer-events: none;
+    bottom: 50px;
+    font-size: 2rem;
+    color: var(--panini-yellow);
+    opacity: 0.5;
 }
 
-.sticker-card.have .sticker-status {
-    display: block;
+.sticker-card.have {
+    border-color: var(--panini-green);
 }
 
 .status-repeated {
     position: absolute;
-    bottom: 50px;
+    bottom: 60px;
     right: 10px;
-    background: var(--accent-2026);
-    color: var(--bg-2026);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.7rem;
+    background: var(--panini-navy);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
     font-weight: 900;
-    display: none;
-}
-
-.sticker-card.repeated .status-repeated {
-    display: block;
-}
-
-.sticker-card.special {
-    border: 1px solid var(--primary-2026);
-    background: linear-gradient(135deg, var(--card-2026) 0%, #15255a 100%);
-}
-
-.sticker-card.special .sticker-name {
-    color: var(--primary-2026);
-    font-size: 0.9rem;
 }
 
 /* Custom Scrollbar 2026 */
