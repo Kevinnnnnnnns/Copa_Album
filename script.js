@@ -80,6 +80,13 @@ const tabRegister = document.getElementById('tab-register');
 const authError = document.getElementById('auth-error');
 const closeModal = document.getElementById('close-modal');
 
+// Report DOM
+const reportModal = document.getElementById('report-modal');
+const closeReportModal = document.getElementById('close-report-modal');
+const genPdfBtn = document.getElementById('gen-pdf-btn');
+const genTxtBtn = document.getElementById('gen-txt-btn');
+const reportTemplate = document.getElementById('report-template');
+
 function init() {
     setupAuthListeners();
     renderTeamFilter();
@@ -320,21 +327,138 @@ function renderTeamFilter() {
         renderGrid();
     });
 
-    document.getElementById('generate-report-btn').addEventListener('click', generateReport);
+    document.getElementById('generate-report-btn').addEventListener('click', openReportModal);
 }
 
-function generateReport() {
-    let report = "=== RELATÓRIO ÁLBUM COPA 2026 ===\n";
+function openReportModal() {
+    reportModal.classList.remove('hidden');
+}
+
+function closeReportModalFunc() {
+    reportModal.classList.add('hidden');
+}
+
+async function generatePDFReport() {
+    closeReportModalFunc();
+    
+    const owned = Object.values(stickers).filter(s => s.have).length;
+    const total = Object.keys(stickers).length;
+    const repeated = Object.values(stickers).reduce((acc, s) => acc + s.repeated, 0);
+    const percent = Math.round((owned / total) * 100) || 0;
+
+    let html = `
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <div class="pdf-title">
+                    <h1>Álbum Copa 2026</h1>
+                    <p>Relatório de Coleção</p>
+                </div>
+                <div class="pdf-date">${new Date().toLocaleDateString()}</div>
+            </div>
+
+            <div class="pdf-stats">
+                <div class="pdf-stat-card">
+                    <span class="label">Progresso</span>
+                    <span class="value">${percent}%</span>
+                </div>
+                <div class="pdf-stat-card">
+                    <span class="label">Figurinhas</span>
+                    <span class="value">${owned} / ${total}</span>
+                </div>
+                <div class="pdf-stat-card">
+                    <span class="label">Repetidas</span>
+                    <span class="value">${repeated}</span>
+                </div>
+            </div>
+    `;
+
+    TEAMS.forEach(team => {
+        const teamStickers = Object.keys(stickers)
+            .filter(id => id.startsWith(team.code))
+            .map(id => ({ id, ...stickers[id] }));
+        
+        const myStickers = teamStickers.filter(s => s.have || s.repeated > 0);
+        
+        if (myStickers.length > 0) {
+            html += `
+                <div class="pdf-team-section">
+                    <div class="pdf-team-header">
+                        <span>${team.name}</span>
+                        <span>${myStickers.filter(s => s.have).length} / ${team.stickers}</span>
+                    </div>
+                    <div class="pdf-sticker-list">
+            `;
+
+            myStickers.forEach(s => {
+                let name = PLAYER_NAMES[s.team]?.[s.num - 1] || `Jogador ${s.num}`;
+                if (s.num === 1 && s.team !== 'CC' && s.team !== 'FWC') name = 'Escudo';
+                if (s.num === 13 && s.team !== 'CC' && s.team !== 'FWC') name = 'Time Completo';
+                
+                let statusText = s.have ? 'OK' : 'SÓ REP.';
+                if (s.repeated > 0) statusText += ` (+${s.repeated})`;
+
+                html += `
+                    <div class="pdf-sticker-item ${s.have ? 'have' : ''} ${s.repeated > 0 ? 'repeated' : ''}">
+                        <span><span class="num">#${s.num}</span> ${name}</span>
+                        <span>${statusText}</span>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                </div>
+            `;
+        }
+    });
+
+    html += `
+            <div class="pdf-footer">
+                Gerado por Álbum Copa 2026 - Desenvolvido por Kevin
+            </div>
+        </div>
+    `;
+
+    reportTemplate.innerHTML = html;
+    reportTemplate.style.display = 'block';
+
+    const opt = {
+        margin: 10,
+        filename: `relatorio_copa2026_${new Date().getTime()}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    try {
+        await html2pdf().set(opt).from(reportTemplate).save();
+    } catch (err) {
+        console.error("Erro ao gerar PDF:", err);
+        alert("Ocorreu um erro ao gerar o PDF. Verifique o console.");
+    } finally {
+        reportTemplate.style.display = 'none';
+        reportTemplate.innerHTML = '';
+    }
+}
+
+function generateTXTReport() {
+    closeReportModalFunc();
+    
+    let report = "==========================================\n";
+    report += "        ÁLBUM COPA DO MUNDO 2026        \n";
+    report += "==========================================\n\n";
     report += `Data: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}\n`;
     
     const owned = Object.values(stickers).filter(s => s.have).length;
     const total = Object.keys(stickers).length;
     const repeated = Object.values(stickers).reduce((acc, s) => acc + s.repeated, 0);
+    const percent = Math.round((owned/total)*100);
     
-    report += `Progresso: ${owned} / ${total} (${Math.round((owned/total)*100)}%)\n`;
+    report += `Progresso: ${owned} / ${total} [${percent}%]\n`;
     report += `Total de Repetidas: ${repeated}\n\n`;
-    
-    report += "--- MINHAS FIGURINHAS ---\n";
+    report += "------------------------------------------\n";
+    report += "        MINHAS FIGURINHAS POR PAÍS        \n";
+    report += "------------------------------------------\n";
     
     TEAMS.forEach(team => {
         const teamStickers = Object.keys(stickers)
@@ -344,25 +468,32 @@ function generateReport() {
         const myStickers = teamStickers.filter(s => s.have || s.repeated > 0);
         
         if (myStickers.length > 0) {
-            report += `\n[${team.name}]\n`;
+            const teamOwned = myStickers.filter(s => s.have).length;
+            report += `\n> ${team.name.toUpperCase()} (${teamOwned}/${team.stickers})\n`;
+            
             myStickers.forEach(s => {
                 let name = PLAYER_NAMES[s.team]?.[s.num - 1] || `Jogador ${s.num}`;
-                if (s.num === 1) name = 'Escudo';
-                if (s.num === 13) name = 'Time Completo';
+                if (s.num === 1 && s.team !== 'CC' && s.team !== 'FWC') name = 'Escudo';
+                if (s.num === 13 && s.team !== 'CC' && s.team !== 'FWC') name = 'Time';
                 
-                let status = s.have ? "Tenho" : "Só Repetida";
-                if (s.repeated > 0) status += ` (+${s.repeated} repetidas)`;
+                let line = ` [#${s.num.toString().padStart(2, '0')}] ${name.padEnd(20)}`;
+                if (s.have) line += " [X]"; else line += " [ ]";
+                if (s.repeated > 0) line += ` (+${s.repeated} rep)`;
                 
-                report += `#${s.num} ${name.padEnd(20)} | ${status}\n`;
+                report += line + "\n";
             });
         }
     });
+
+    report += "\n\n==========================================\n";
+    report += "   Gerado automaticamente pelo Álbum      \n";
+    report += "==========================================\n";
 
     const blob = new Blob([report], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `relatorio_album_2026_${new Date().getTime()}.txt`;
+    a.download = `relatorio_copa2026_${new Date().getTime()}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -370,6 +501,15 @@ function generateReport() {
 }
 
 function setupEventListeners() {
+    closeReportModal.onclick = closeReportModalFunc;
+    genPdfBtn.onclick = generatePDFReport;
+    genTxtBtn.onclick = generateTXTReport;
+
+    // Fechar modal clicando fora
+    window.onclick = (event) => {
+        if (event.target == reportModal) closeReportModalFunc();
+        if (event.target == authModal) authModal.classList.add('hidden');
+    };
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
