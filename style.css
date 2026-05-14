@@ -484,115 +484,119 @@ header::before {
 
 /* PDF Template Styles */
 .pdf-container {
-    padding: 40px;
+    padding: 30px;
     background: white;
     color: #00153a;
     font-family: 'Outfit', sans-serif;
-    width: 800px;
+    width: 1000px; /* Wider to allow more columns */
 }
 
 .pdf-header {
-    border-bottom: 4px solid var(--panini-navy);
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+    border-bottom: 3px solid var(--panini-navy);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
 
 .pdf-title h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0;
     color: var(--panini-navy);
     text-transform: uppercase;
 }
 
 .pdf-title p {
-    margin: 5px 0 0;
+    margin: 2px 0 0;
     color: var(--panini-red);
     font-weight: 800;
+    font-size: 0.9rem;
 }
 
 .pdf-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 40px;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
 .pdf-stat-card {
     background: #f0f3f5;
-    padding: 20px;
-    border-radius: 15px;
+    padding: 12px;
+    border-radius: 12px;
     text-align: center;
 }
 
 .pdf-stat-card .label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: #666;
     text-transform: uppercase;
 }
 
 .pdf-stat-card .value {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 900;
     color: var(--panini-navy);
     display: block;
 }
 
 .pdf-team-section {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     page-break-inside: avoid;
 }
 
 .pdf-team-header {
     background: var(--panini-navy);
     color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 6px 15px;
+    border-radius: 8px;
     font-weight: 800;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
+    font-size: 0.85rem;
 }
 
 .pdf-sticker-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns to save vertical space */
+    gap: 5px;
 }
 
 .pdf-sticker-item {
     display: flex;
     justify-content: space-between;
-    padding: 8px 15px;
+    padding: 4px 10px;
     background: #fff;
     border: 1px solid #eee;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    line-height: 1.2;
 }
 
 .pdf-sticker-item.have {
-    border-left: 4px solid var(--panini-green);
+    border-left: 3px solid var(--panini-green);
 }
 
 .pdf-sticker-item.repeated {
     background: #fffef0;
-    border-left: 4px solid var(--panini-yellow);
+    border-left: 3px solid var(--panini-yellow);
 }
 
 .pdf-sticker-item .num {
     font-weight: 800;
     color: var(--panini-red);
-    margin-right: 10px;
+    margin-right: 5px;
+    font-size: 0.7rem;
 }
 
 .pdf-footer {
-    margin-top: 50px;
-    padding-top: 20px;
+    margin-top: 30px;
+    padding-top: 15px;
     border-top: 1px solid #eee;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #999;
 }
