@@ -600,3 +600,207 @@ header::before {
     font-size: 0.7rem;
     color: #999;
 }
+
+/* ==========================================
+   RESPONSIVIDADE E VERSÃO MOBILE PREMIUM
+   ========================================== */
+@media (max-width: 768px) {
+    /* Header & Layout Geral */
+    header {
+        padding: 2rem 1rem;
+    }
+    
+    header::before {
+        font-size: 8rem;
+        right: -10px;
+        bottom: -20px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .title-area h1 {
+        font-size: 2.2rem;
+    }
+
+    .title-area h1 span {
+        font-size: 1.4rem;
+    }
+
+    .user-area {
+        flex-direction: column;
+        width: 100%;
+        gap: 1.2rem;
+    }
+
+    .user-profile {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .stats-card {
+        width: 100%;
+        min-width: 0;
+        padding: 1.2rem;
+        border-radius: 20px;
+    }
+
+    /* Controles e Filtros */
+    .controls {
+        margin: -20px 1rem 0;
+        padding: 1.2rem;
+        border-radius: 24px;
+        gap: 1rem;
+    }
+
+    .team-selector {
+        width: 100%;
+        margin-bottom: 0.2rem;
+    }
+
+    #team-filter {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+        background-position: right 1.2rem center;
+    }
+
+    /* Filtros com Rolagem Horizontal Swipable */
+    .filters {
+        display: flex;
+        overflow-x: auto;
+        width: 100%;
+        gap: 0.6rem;
+        padding-bottom: 0.6rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .filters::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    .btn-filter {
+        flex-shrink: 0;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+        border-radius: 12px;
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    .search-container input {
+        width: 100%;
+        padding: 0.7rem 1.2rem 0.7rem 2.8rem;
+        background-position: 1rem center;
+        font-size: 0.9rem;
+    }
+
+    /* Grid de Figurinhas */
+    .sticker-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 0.8rem;
+        padding: 2rem 1rem;
+    }
+
+    /* Card de Figurinha no Mobile */
+    .sticker-card {
+        border-radius: 14px;
+    }
+
+    .sticker-info {
+        padding: 0.8rem;
+    }
+
+    .sticker-team-badge {
+        top: 8px;
+        left: 8px;
+        font-size: 0.65rem;
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+
+    .sticker-number {
+        top: 8px;
+        right: 8px;
+        font-size: 0.75rem;
+    }
+
+    .sticker-name {
+        font-size: 0.85rem;
+        margin-top: 10px;
+        line-height: 1.15;
+    }
+
+    .status-repeated {
+        bottom: 45px;
+        right: 6px;
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        border-radius: 6px;
+    }
+
+    .sticker-actions {
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .btn-action {
+        padding: 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .sticker-card.special::after {
+        font-size: 1.2rem;
+        bottom: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Forçar exatamente 2 colunas no celular para ficar estilo Álbum e evitar figurinhas gigantes */
+    .sticker-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+        padding: 1.5rem 0.5rem;
+    }
+
+    /* Modal de Login e Relatório */
+    .modal-content {
+        width: 92%;
+        padding: 1.5rem;
+        border-radius: 24px;
+    }
+
+    .report-options h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .report-options p {
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-report-opt {
+        padding: 1rem;
+        gap: 1rem;
+        border-radius: 16px;
+    }
+
+    .btn-report-opt .icon {
+        font-size: 2rem;
+    }
+
+    .btn-report-opt strong {
+        font-size: 1rem;
+    }
+
+    .btn-report-opt span {
+        font-size: 0.8rem;
+    }
+}
+
