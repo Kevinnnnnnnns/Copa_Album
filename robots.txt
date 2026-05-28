@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kevinnnnnnnns.github.io/Copa_Album/sitemap.xml
