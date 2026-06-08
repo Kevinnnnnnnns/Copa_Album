@@ -100,6 +100,7 @@
                 <button class="btn-filter" data-filter="have">Tenho</button>
                 <button class="btn-filter" data-filter="repeated">Repetidas</button>
                 <button id="generate-report-btn" class="btn-filter btn-report">Relatório</button>
+                <button id="multi-select-btn" class="btn-filter btn-multi-select">➕ Multi-Seleção</button>
             </div>
             
             <div class="search-container">
@@ -140,6 +141,38 @@
     <!-- Hidden Report Template for PDF -->
     <div id="report-template" style="display: none;">
         <!-- Content will be injected by JS -->
+    </div>
+
+    <!-- Multi-Selection Modal -->
+    <div id="multi-select-modal" class="modal hidden">
+        <div class="modal-content multi-select-content">
+            <span class="close-modal" id="close-multi-select">&times;</span>
+            <h2>Adicionar Figurinhas em Lote</h2>
+            
+            <div class="multi-select-controls">
+                <select id="multi-select-team" class="multi-select-input">
+                    <option value="">Selecione uma seleção...</option>
+                </select>
+                
+                <div class="multi-select-actions">
+                    <button id="select-all-btn" class="btn-multi-action">Selecionar Tudo</button>
+                    <button id="deselect-all-btn" class="btn-multi-action">Deselecionar Tudo</button>
+                </div>
+            </div>
+
+            <div id="multi-select-grid" class="multi-select-grid">
+                <!-- Stickers will be injected here -->
+            </div>
+
+            <div class="multi-select-footer">
+                <span id="multi-select-count">0 selecionadas</span>
+                <div>
+                    <button id="mark-as-have-btn" class="btn-action-bulk btn-have">Marcar como Tenho</button>
+                    <button id="mark-as-repeated-btn" class="btn-action-bulk btn-repeated">Marcar como Repetidas</button>
+                    <button id="close-multi-select-btn" class="btn-action-bulk btn-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Firebase App (Compat mode for easier sync) -->
